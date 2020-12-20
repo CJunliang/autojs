@@ -22,7 +22,7 @@ for (var i = 0; i < length; i++) {
     if (book) {
         // 点击书籍
         var result = book.click();
-        console.log("click:", result)
+        // console.log("click:", result)
         sleep(2000)
         if (result) {
             // 观看视频
