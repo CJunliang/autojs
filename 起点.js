@@ -20,17 +20,17 @@ for (var i = 0; i < length; i++) {
     var list = id("layoutRoot").find();
     var child = list[i];
     var book = child.findOne(id("coveLayout"));
-    bookNum++;
     // 书名
     var bookName = child.findOne(id("bookNameTxt"));
 
     if (bookName)
         console.log(i, ':bookname: ', bookName.text())
     if (book) {
+        bookNum++;
         // 点击书籍
         var result = book.click();
         // console.log("click:", result)
-        sleep(2000)
+        sleep(2500)
         if (result) {
             // 观看视频
             viewWebAD();
@@ -52,23 +52,36 @@ function viewWebAD() {
         console.log("立即领取")
         sleep(Math.floor(Math.random() * 5 + 15 + loadTime) * 1000)
         // 点击左上角退出并确认
-        className("android.widget.ImageView").findOne().click()
-        className("android.widget.TextView").text("关闭广告").click();
+        exitAd();
     }
-    sleep(1000);
+    sleep(1500);
     // 红包
     // 点击红包按钮
     if (id("layout_hongbao").exists()) {
         id("layout_hongbao").findOne().click();
+        sleep(1500)
         if (id("layoutHongbaoRoot").exists()) {
             console.log("马上抢")
             id("layoutHongbaoRoot").findOne().click();
             sleep(Math.floor(Math.random() * 5 + 15 + loadTime) * 1000)
             // 点击左上角退出并确认
-            className("android.widget.ImageView").findOne().click()
-            className("android.widget.TextView").text("关闭广告").click();
+            exitAd();
         }
     }
     sleep(1000);
     back()
+}
+
+
+// 退出广告
+function exitAd() {
+    // 广告是文章
+    if (className("android.view.View").clickable(true).depth(5).exists()) {
+        className("android.view.View").clickable(true).depth(5).findOne().click();
+    }
+    else {
+    // 广告是视频
+        className("android.widget.ImageView").findOne().click()
+        className("android.widget.TextView").text("关闭广告").click();
+    }
 }
